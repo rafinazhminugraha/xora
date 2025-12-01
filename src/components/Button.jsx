@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { Marker } from "./Marker.jsx";
+import { motion } from "framer-motion";
 
 const Button = ({
   icon,
@@ -17,7 +18,9 @@ const Button = ({
         </span>
 
         {icon && (
-          <img
+          <motion.img
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 0.5 }}
             src={icon}
             alt="circle"
             className="size-10 mr-5 object-contain z-10"
@@ -33,7 +36,10 @@ const Button = ({
     </>
   );
   return href ? (
-    <a
+    <motion.a
+      whileHover={{ scale: 1.05, y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.2 }}
       className={clsx(
         "relative p-0.5 g5 rounded-2xl shadow-500 group",
         containerClassName,
@@ -41,9 +47,12 @@ const Button = ({
       href={href}
     >
       <Inner />
-    </a>
+    </motion.a>
   ) : (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.05, y: -2 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.2 }}
       className={clsx(
         "relative p-0.5 g5 rounded-2xl shadow-500 group",
         containerClassName,
@@ -51,7 +60,7 @@ const Button = ({
       onClick={onClick}
     >
       <Inner />
-    </button>
+    </motion.button>
   );
 };
 export default Button;

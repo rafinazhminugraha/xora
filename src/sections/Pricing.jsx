@@ -4,6 +4,7 @@ import clsx from "clsx";
 import CountUp from "react-countup";
 import { plans } from "../constants/index.jsx";
 import Button from "../components/Button.jsx";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Pricing = () => {
   const [monthly, setMonthly] = useState(false);
@@ -12,32 +13,55 @@ const Pricing = () => {
     <section>
       <Element name="pricing">
         <div className="container">
-          <div className="max-w-960 pricing-head_before relative mx-auto border-l border-r border-s2 bg-s1/50 pb-40 pt-28 max-xl:max-w-4xl max-lg:border-none max-md:pb-32 max-md:pt-16">
-            <h3 className="h3 max-lg:h4 max-md:h5 z-3 relative mx-auto mb-14 max-w-lg text-center text-p4 max-md:mb-11 max-sm:max-w-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-960 pricing-head_before relative mx-auto border-l border-r border-s2 bg-s1/50 pb-40 pt-28 max-xl:max-w-4xl max-lg:border-none max-md:pb-32 max-md:pt-16"
+          >
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="h3 max-lg:h4 max-md:h5 z-3 relative mx-auto mb-14 max-w-lg text-center text-p4 max-md:mb-11 max-sm:max-w-sm"
+            >
               Flexible pricing for teams of all sizes
-            </h3>
+            </motion.h3>
 
-            <div className="relative z-4 mx-auto flex w-[375px] rounded-3xl border-[3px] border-s4/25 bg-s1/50 p-2 backdrop-blur-[6px] max-md:w-[310px]">
-              <button
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="relative z-4 mx-auto flex w-[375px] rounded-3xl border-[3px] border-s4/25 bg-s1/50 p-2 backdrop-blur-[6px] max-md:w-[310px]"
+            >
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 className={clsx("pricing-head_btn", monthly && "text-p4")}
                 onClick={() => setMonthly(true)}
               >
                 Monthly
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 className={clsx("pricing-head_btn", !monthly && "text-p4")}
                 onClick={() => setMonthly(false)}
               >
                 Annual
-              </button>
+              </motion.button>
 
-              <div
+              <motion.div
+                animate={{ x: monthly ? 0 : "100%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 className={clsx(
-                  "g4 rounded-14 before:h-100 pricing-head_btn_before absolute left-2 top-2 h-[calc(100%-16px)] w-[calc(50%-8px)] overflow-hidden shadow-400 transition-transform duration-500",
-                  !monthly && "translate-x-full",
+                  "g4 rounded-14 before:h-100 pricing-head_btn_before absolute left-2 top-2 h-[calc(100%-16px)] w-[calc(50%-8px)] overflow-hidden shadow-400"
                 )}
               />
-            </div>
+            </motion.div>
 
             <div className="pricing-bg">
               <img
@@ -55,26 +79,37 @@ const Pricing = () => {
                 className="absolute inset-0 opacity-5 mix-blend-soft-light"
               />
             </div>
-          </div>
+          </motion.div>
 
           {/*  pricing section*/}
           <div className="scroll-hide relative z-2 -mt-12 flex items-start max-xl:gap-5 max-xl:overflow-auto max-xl:pt-6">
             {plans.map((plan, index) => (
-              <div
+              <motion.div
                 key={plan.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
                 className="pricing-plan_first pricing-plan_last pricing-plan_odd pricing-plan_even relative border-2 p-7 max-xl:min-w-80 max-lg:rounded-3xl xl:w-[calc(33.33%+2px)]"
               >
                 {index === 1 && (
                   <div className="g4 absolute h-330 left-0 right-0 top-0 z-1 rounded-tl-3xl rounded-tr-3xl" />
                 )}
 
-                <div
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.2 + 0.2 }}
                   className={clsx(
                     "absolute left-0 right-0 z-2 flex items-center justify-center",
                     index === 1 ? "-top-6" : "-top-6 xl:-top-11",
                   )}
                 >
-                  <img
+                  <motion.img
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.6 }}
                     src={plan.logo}
                     alt={plan.title}
                     className={clsx(
@@ -82,7 +117,7 @@ const Pricing = () => {
                       index === 1 ? "size-[120px]" : "size-[88px]",
                     )}
                   />
-                </div>
+                </motion.div>
 
                 <div
                   className={clsx(
@@ -131,31 +166,43 @@ const Pricing = () => {
                 </div>
 
                 <ul className="mx-auto space-y-4 xl:px-7">
-                  {plan.features.map((feature) => (
-                    <li
+                  {plan.features.map((feature, featIndex) => (
+                    <motion.li
                       key={feature}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.4, delay: index * 0.2 + featIndex * 0.1 }}
                       className="relative flex items-center gap-5"
                     >
-                      <img
+                      <motion.img
+                        whileHover={{ scale: 1.2, rotate: 15 }}
+                        transition={{ duration: 0.3 }}
                         src={"/images/check.png"}
                         alt="check"
                         className="size-10 object-contain"
                       />
                       <p className="flex-1">{feature}</p>
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
 
-                <div className="mt-10 flex w-full justify-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.2 + 0.8 }}
+                  className="mt-10 flex w-full justify-center"
+                >
                   <Button icon={plan.icon}>Get Started</Button>
-                </div>
+                </motion.div>
 
                 {index === 1 && (
                   <p className="small-compact mt-9 text-center text-p3 before:mx-2.5 before:content-['-'] after:mx-2.5 after:content-['-']">
                     Limited time offer
                   </p>
                 )}
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
